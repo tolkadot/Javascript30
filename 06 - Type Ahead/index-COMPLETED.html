@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Type Ahead 👀</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<h1>Covid testing locations in Victoria Australia</h1>
+		<div>
+			<h2>Last Updated: <span id="updated"></span></h2>
+		</div>
+		<form class="search-form">
+			<input
+				type="text"
+				class="search"
+				id="cities-search"
+				placeholder="Enter City or Suburb"
+			/>
+			<ul class="suggestions"></ul>
+		</form>
+		<script>
+			const covidTestingSites =
+				"https://gist.githubusercontent.com/tolkadot/bf82976676f5e3140c8acead487328c0/raw/3180bbd7fe7a6067f2ccf14f8f2c34d921a5418d/vic-covid-testing-sites.json";
+
+			const suggestions = document.querySelector(".suggestions");
+			const cities = [];
+			let sitemeta;
+
+			// get list of cities
+			let output = fetch(covidTestingSites)
+				.then((response) => response.json())
+				.then((data) => {
+					cities.push(...data.sites);
+					sitemeta = data.meta;
+					document.querySelector(
+						"#updated"
+					).innerHTML = `${sitemeta.releaseDate}`;
+				});
+			//.catch(function () {});
+			//.then((data) => console.log(data.sites));
+
+			// get input
+			function findMatches(inputWord, citiesArray) {
+				return citiesArray.filter((place) => {
+					const regex = new RegExp(inputWord, "gi");
+					return place.Suburb.match(regex) || place.LGA.match(regex);
+				});
+			}
+
+			function displayMatches() {
+				console.log(this.value);
+				let matchArray = findMatches(this.value, cities);
+				console.log("MatchArray=", matchArray);
+				const html = matchArray
+					.map((place) => {
+						const hl = new RegExp(this.value, "gi");
+
+						const city = place.Suburb.replace(
+							hl,
+							`<span class="hl">${this.value}</span>`
+						);
+						const lga = place.LGA.replace(
+							hl,
+							`<span class="hl">${this.value}</span>`
+						);
+
+						return `<ul>
+						<li><span>${city}<span></li>
+						<li><span>${lga}<span></li>
+						<li>${place.Address}</li>
+						<li>${place.ServiceFormat}</li>
+						<li>Phone: ${
+							place.Phone != null
+								? "<a href='tel" +
+								  place.Phone +
+								  " '>" +
+								  place.Phone +
+								  "</a>"
+								: "no phone number available"
+						}</li>
+						<li>Hours: ${
+							place.Service_Availability != null
+								? place.Service_Availability
+								: "No hours available"
+						} </li>
+						<li>Instructions: ${
+							place.Attendance_Instructions != null
+								? place.Attendance_Instructions
+								: "No special instructions available"
+						} </li>
+						<li><a href="https://www.google.com/maps/search/?api=1&query=${
+							place.Latitude
+						}%2C${place.Longitude}" target="_blank">Take me to the map</a>
+						</ul>`;
+					})
+					.join(" ");
+
+				console.log(html);
+				suggestions.innerHTML = html;
+			}
+
+			document
+				.querySelector("#cities-search")
+				.addEventListener("change", displayMatches);
+			document
+				.querySelector("#cities-search")
+				.addEventListener("keyup", displayMatches);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>HTML5 Canvas</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	</head>
+	<body>
+		<div class="inputs">
+			<div><h1>Draw a picture</h1></div>
+
+			<div>
+				<input
+					type="color"
+					id="colorPicker"
+					name="colour"
+					value="#deedee"
+				/>
+				<label class="visually-hidden" for="colour">Pen Colour</label>
+			</div>
+			<div>
+				<input type="number" id="widthPicker" name="width" value="10" />
+				<label class="visually-hidden" for="width">Pen Width</label>
+			</div>
+			<div>
+				<select type="dropdown" id="capPicker" name="cap" value="10">
+					<option value="round">Round</option>
+					<option value="square">Square</option>
+				</select>
+				<label class="visually-hidden" for="cap">Cap Style</label>
+			</div>
+			<div>
+				<button id="clearCanvas">Clear Canvas</button>
+			</div>
+		</div>
+
+		<canvas id="draw" style="border: 1px solid var(--base)"></canvas>
+		<script>
+			const canvas = document.getElementById("draw");
+			const colourPicker = document.getElementById("colorPicker");
+			const widthPicker = document.getElementById("widthPicker");
+			const capPicker = document.getElementById("capPicker");
+			const clearCanvas = document.getElementById("clearCanvas");
+
+			const ctx = canvas.getContext("2d");
+			canvas.height = window.innerHeight - 30;
+			canvas.width = window.innerWidth;
+			ctx.strokeStyle = "rgb(19, 108, 114)";
+			ctx.lineJoin = "round";
+			ctx.lineCap = "round";
+			ctx.lineWidth = 10;
+			let mouseDown = false;
+
+			let xCoord = 0;
+			let yCoord = 0;
+
+			function draw(e) {
+				if (mouseDown) {
+					let xCoord = e.offsetX;
+					let yCoord = e.offsetY;
+					ctx.beginPath();
+					//ctx.moveTo(xCoord, yCoord);
+					ctx.lineTo(xCoord, yCoord);
+					ctx.stroke();
+					//console.log(e);
+				}
+			}
+
+			function updateColour() {
+				//console.log("updateColour");
+				ctx.strokeStyle = colourPicker.value;
+			}
+			function updateWidth() {
+				//console.log("updateWidth");
+				ctx.lineWidth = widthPicker.value;
+			}
+			function updateCap() {
+				//console.log("updateCao");
+				ctx.lineCap = capPicker.value;
+			}
+			function clearAll() {
+				//console.log("celared");
+				ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+			}
+
+			canvas.addEventListener("mousemove", draw);
+
+			colourPicker.addEventListener("change", updateColour);
+			widthPicker.addEventListener("change", updateWidth);
+			capPicker.addEventListener("change", updateCap);
+
+			canvas.addEventListener("mousedown", () => (mouseDown = true));
+			canvas.addEventListener("mouseup", () => (mouseDown = false));
+			clearCanvas.addEventListener("click", clearAll);
+		</script>
+
+		<style>
+			/* http://meyerweb.com/eric/tools/css/reset/
+			   v2.0 | 20110126
+			   License: none (public domain)
+			*/
+
+			:root {
+				--base: rgb(19, 108, 114);
+			}
+			html,
+			body,
+			div,
+			span,
+			applet,
+			object,
+			iframe,
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6,
+			p,
+			blockquote,
+			pre,
+			a,
+			abbr,
+			acronym,
+			address,
+			big,
+			cite,
+			code,
+			del,
+			dfn,
+			em,
+			img,
+			ins,
+			kbd,
+			q,
+			s,
+			samp,
+			small,
+			strike,
+			strong,
+			sub,
+			sup,
+			tt,
+			var,
+			b,
+			u,
+			i,
+			center,
+			dl,
+			dt,
+			dd,
+			ol,
+			ul,
+			li,
+			fieldset,
+			form,
+			label,
+			legend,
+			table,
+			caption,
+			tbody,
+			tfoot,
+			thead,
+			tr,
+			th,
+			td,
+			article,
+			aside,
+			canvas,
+			details,
+			embed,
+			figure,
+			figcaption,
+			footer,
+			header,
+			hgroup,
+			menu,
+			nav,
+			output,
+			ruby,
+			section,
+			summary,
+			time,
+			mark,
+			audio,
+			video {
+				margin: 0;
+				padding: 0;
+				border: 0;
+				font-size: 100%;
+				font: inherit;
+				vertical-align: baseline;
+				font-family: Helvetica, sans-serif, -apple-system,
+					BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+					Fira Sans, Droid Sans, Helvetica Neue;
+			}
+			/* HTML5 display-role reset for older browsers */
+			article,
+			aside,
+			details,
+			figcaption,
+			figure,
+			footer,
+			header,
+			hgroup,
+			menu,
+			nav,
+			section {
+				display: block;
+			}
+			body {
+				line-height: 1;
+			}
+			ol,
+			ul {
+				list-style: none;
+			}
+			blockquote,
+			q {
+				quotes: none;
+			}
+			blockquote:before,
+			blockquote:after,
+			q:before,
+			q:after {
+				content: "";
+				content: none;
+			}
+			table {
+				border-collapse: collapse;
+				border-spacing: 0;
+			}
+			html,
+			body {
+				margin: 0;
+			}
+			h1 {
+				font-size: 2.33rem;
+				color: var(--base);
+			}
+			.inputs {
+				padding: 1rem;
+				display: flex;
+				flex-direction: column;
+			}
+			.inputs > div {
+				padding: 0.5rem;
+				display: flex;
+
+				flex-direction: column-reverse;
+			}
+			label {
+				padding-bottom: 0.25rem;
+			}
+			@media (min-width: 768px) {
+				.inputs {
+					flex-direction: row;
+				}
+			}
+			input,
+			select {
+				min-height: 33px;
+				min-width: 100px;
+				box-sizing: border-box;
+				width: 100%;
+				border: 1px solid var(--base);
+				padding: 5px 10px;
+			}
+			button {
+				background-color: var(--base);
+				color: #fff;
+				border: 1px solid var(--base);
+				min-height: 33px;
+				text-transform: uppercase;
+				padding: 5px 20px;
+				letter-spacing: 0.5px;
+			}
+			.visually-hidden {
+				clip: rect(0, 0, 0, 0) !important;
+				border: 0 !important;
+				height: 1px !important;
+				margin: -1px !important;
+				overflow: hidden !important;
+				padding: 0 !important;
+				position: absolute !important;
+				white-space: nowrap !important;
+				width: 1px !important;
+			}
+		</style>
+	</body>
+</html>
