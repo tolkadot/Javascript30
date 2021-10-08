@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>HTML Video Player</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<section>
+			<div class="block--video">
+				<video  poster="" controls playsinline id="video-element">
+						<source src="652333414.mp4" type="video/mp4">
+						Your browser does not support the video tag.
+				</video>
+	
+				<div id='video-controls'>
+	
+						<button id='btnPlayPause' class='play' title='play' accesskey="P">Play</button>
+						<div id="progress">
+							<progress class="" id='progress-bar' min='0' max='100' value='0' aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" >0% played</progress>
+							<div id="progress-marker"></div>
+						</div>
+						<div class="" id="current-time">0:00</div>
+						<input type="range" name="volume" class="player__slider" min="0" max="100" value="50" step="0.05" id="videoVolume" />
+						<input type="range" name="volume" class="player__slider" min="0" max="100" value="50" step="0.05" id="videoVolume" />
+
+						<button data-skip="10" class="player__button" id="timeBack">« 10s</button>
+				</div>
+			</div>
+		</section>
+	
+
+		<script src="scripts.js"></script>
+	</body>
+</html>
