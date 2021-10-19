@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+</head>
+<body>
+
+  <div class="wrapper">
+    <h1>Guess the secret code.</h1>
+    <input id="guessed" type="text" placeholder="start typing...">
+    <p id="result"></p>
+
+  </div>
+
+<style>
+  body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+  .wrapper {
+    max-width: 800px;
+    margin: auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  h1 {
+    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: clamp(1.4rem, 3vw, 4rem); 
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  #result {
+    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+    -webkit-background-clip: text;
+    color: transparent;
+    min-height: 40px;
+    margin-left: -100vh;
+    transition: all 1s ease;
+    font-size: clamp(1rem, 2rem, 4rem); 
+  }
+  input {
+    width: 90%;
+    min-height: 30px;
+    border: 1px solid orange;
+    text-align: center;
+    font-size: 1rem;
+    color: orange;
+  }
+  input::placeholder { 
+    color: orange;
+  }
+  input:focus-visible { 
+    outline-color: orange ;
+    box-shadow: 0 0 3px orange;
+
+  }
+  @media(min-width: 768px) {
+    input {
+      width: 70%;
+      min-height: 40px;
+    }
+  }
+
+</style>
+<script>
+
+
+
+//const catchphrase = ["rainbow" , "unicorn", "baloon"]
+
+const catchphrase = [
+    {
+      name: "rainbow",
+      code: '🌈'
+    },
+    {
+      name: "baloon",
+      code: '🎈'
+    },
+    {
+      name: "unicorn",
+      code: '🦄'
+    },
+    {
+      name: "heart",
+      code: '💗'
+    }
+]
+
+
+let inputarr = [];
+const jsConfetti = new JSConfetti()
+
+// jsConfetti.addConfetti({
+//     emojis: ['&#127752;'],
+// })
+
+const resultdiv = document.querySelector('#result');
+console.log(result)
+
+const inputWord = document.querySelector('#guessed');
+
+function checkword( arrin, arrgiven ) {
+  console.log(arrgiven, arrin.join(''))
+  const result  = arrgiven.find(element => element.name === arrin.join('')  )
+  console.log(result, "result");
+  if(result){
+    console.log('bingpot');
+    resultdiv.innerText = "Champion"
+    resultdiv.style.marginLeft = '0';
+    jsConfetti.addConfetti({
+    emojis: [result.code],
+    })
+  }
+  else {
+    console.log(result)
+    resultdiv.innerText = "You Loose"
+    resultdiv.style.marginLeft = '0';
+  }
+}
+
+
+inputWord.addEventListener('keydown' , function(e){
+  //console.log(e);
+
+  resultdiv.style.marginLeft = '-200vw';
+  if(e.code === "Enter") {
+    console.log("yo");
+    inputWord.value = '';
+      checkword(inputarr, catchphrase);
+      inputarr = [];
+      console.log(inputarr);
+  }
+  else {
+    console.log("h3434")
+    inputarr.push(e.key);
+    //raiinputarr.splice( -catchphrase.length - 1 , inputarr.length - catchphrase.length)
+    console.log(inputarr.join(''));
+  }
+
+
+})
+
+
+</script>
+</body>
+</html>

@@ -7,62 +7,27 @@
 	</head>
 	<body>
 		<div class="player">
-			<video
-				class="player__video viewer"
-				src="652333414.mp4"
-				id="video-element"
-			></video>
+			<video class="player__video viewer" src="652333414.mp4" id="video-element"></video>
 
 			<div id="video-controls">
-				<button
-					class="player__button paused"
-					title="Toggle Play"
-					id="btnPlayPause"
-				>
-					►
-				</button>
+				<button class="player__button paused" title="Toggle Play" id="btnPlayPause"> ► </button>
 				<div class="progress" id="progress">
-					<progress
-						class=""
-						id="progress-bar"
-						min="0"
-						max="100"
-						value="0"
-						aria-valuenow="0"
-						aria-valuemin="0"
-						aria-valuemax="100"
-					>
+					<progress class="" id="progress-bar" min="0" max="100" value="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
 						0% played
 					</progress>
+					<div id="progress-marker"></div>
+					<div class="" id="current-time">0:00</div>
 				</div>
 
-				<input
-					type="range"
-					name="volume"
-					class="player__slider"
-					min="0"
-					max="100"
-					value="50"
-					step="0.05"
-					id="videoVolume"
-				/>
-				<input
-					type="range"
-					name="playbackRate"
-					class="player__slider"
-					min="0"
-					max="100"
-					step="0.1"
-					value="1"
-					id="playBackRate"
-				/>
-				<button data-skip="10" class="player__button" id="timeBack">
-					« 10s
-				</button>
-				<button data-skip="25" class="player__button" id="timeForward">
-					25s »
-				</button>
-				<div class="" id="current-time">0:00</div>
+				<input type="range" name="volume" class="player__slider" min="0" max="100" value="50" step="0.05" id="videoVolume"/>
+				<input type="range" name="playbackRate" class="player__slider" min="0" max="100" step="0.1" value="1" id="playBackRate"/>
+
+				<div class="grid--two">
+					<button data-skip="10" class="player__button" id="timeBack"> « 10s</button>
+					<button data-skip="25" class="player__button" id="timeForward"> 25s »</button>
+				</div>
+			
+
 			</div>
 		</div>
 

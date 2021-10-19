@@ -8,9 +8,23 @@ const skipForward = document.querySelector("#timeForward");
 const videoVolume = document.querySelector("#videoVolume");
 const playBackRate = document.querySelector("#playBackRate");
 const mytimer = document.getElementById("current-time");
+const progressMarker = document.getElementById('progress-marker');
 
 
+
+
+//TODO 
+// 1 - update marker on progress bar DONE
+// ll2 - full screen option
+// watch vid for range section
+//get skip orward 25s working
+// make more accessible
+
+
+
+//leave the controls in tact for non js users
 video.controls = false;
+
 function playPauseVideo() {
 	const videoAction = video.paused || video.ended ? "play" : "pause";
 	video[videoAction]();
@@ -19,9 +33,10 @@ function playPauseVideo() {
 }
 
 function updateProgressBar(e) {
-	let percentage = Math.floor((100 / video.duration) * video.currentTime);
+	let percentage = (100 / video.duration) * video.currentTime;
 	progress.value = percentage;
 	progress.setAttribute("aria-valuenow", percentage);
+	progressMarker.style.left = percentage + '%';
 	mytimer.innerHTML = hms(Math.floor(video.currentTime));
 }
 

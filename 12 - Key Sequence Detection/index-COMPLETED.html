@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Key Detection</title>
+  <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+</head>
+<body>
+
+
+  <div><h1>Guess the secret code.</h1></div>
+  <div><input type="text" placeholder="start typing"></div>
+
+
+<script>
+
+const catchphrase = "helloworld"
+let inputarr = [];
+const jsConfetti = new JSConfetti()
+
+document.body.addEventListener('keydown' , function(e){
+
+
+  inputarr.push(e.key);
+  
+  //inputarr.splice(inputarr - 1 , inputarr.length - catchphrase )
+  inputarr.splice( -catchphrase.length - 1 , inputarr.length - catchphrase.length)
+  if(inputarr.join('') ===  catchphrase) {
+    console.log('bingpot');
+    let inputarr = [];
+    jsConfetti.addConfetti()
+
+  }
+
+  
+
+  console.log(inputarr.join(''));
+
+
+})
+
+
+</script>
+</body>
+</html>
