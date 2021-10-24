@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Reference VS Copy</title>
+</head>
+<body>
+
+  <script>
+    // start with strings, numbers and booleans
+
+    // Let's say we have an array
+    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+
+    console.log("players" ,players)
+
+    players2 = [...players]
+
+    players2[2] = "Brian"
+
+    console.log("players2" ,players2)
+
+
+    // The same thing goes for objects, let's say we have a person object
+
+    // with Objects
+    const person = {
+      name: 'Wes Bos',
+      age: 80
+    };
+
+    console.log("Person:" , person)
+
+
+    const person2 = Object.assign( {} , person , { age :10 } );
+
+    console.log("Person2:" , person2)
+
+    // and think we make a copy:
+   
+    const person3 = JSON.parse(JSON.stringify(person2));
+
+    console.log("Person3:" , person3)
+
+
+  </script>
+
+</body>
+</html>
