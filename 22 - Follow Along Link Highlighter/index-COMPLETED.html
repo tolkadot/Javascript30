@@ -35,16 +35,32 @@
     document.body.append(span);
     span.classList.add("highlight")
 
-    console.log(span)
+    // console.log(span)
 
     function addHighlight() {
-      let coords = this.getBoundingClientRect();
-        console.log(coords.height)
-        span.style.height = coords.height + "px"
-        span.style.backgroundColor = "red"
-        span.style.width = coords.width + "px";
-        span.style.left = coords.left + "px"
-        span.style.top = coords.top + "px"
+      // console.log(window.pageYOffset)
+      // console.log(window.innerHeight) 
+      // console.log(window.scrollY)
+
+      let coords = this.getBoundingClientRect()
+        console.log(coords.top )
+        const myCoords = {
+          height: coords.height,
+          width: coords.width,
+          left: coords.left,
+          top: coords.top + window.scrollY
+        }
+
+        span.style.height = `${myCoords.height}px`
+        span.style.width =  `${myCoords.width}px`
+        span.style.transform = `translate(${myCoords.left}px , ${myCoords.top}px)`
+
+        // span.style.height = coords.height + "px"
+        // span.style.width = coords.width + "px";
+        // span.style.left = coords.left + "px"
+        // span.style.top = coords.top + window.scrollY +  "px"
+        // span.style.transform = `translate(${coords.left}px , ${coords.top + window.scrollY}px)`
+
     }
 
     triggers.forEach(a => a.addEventListener('mouseenter' , addHighlight))
@@ -53,14 +69,14 @@
   </script>
 
   <style>
-  html {
+  /* html {
       position: relative;
     }
     .highlight  {
       position: absolute;
       top: 0;
       left: 0;
-    }
+    } */
 
   </style>
 </body>
