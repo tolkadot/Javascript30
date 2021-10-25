@@ -49,6 +49,42 @@
 const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
 
 
+
+//MYWAY
+const articles = ["A" , "The" , "An"]
+
+
+const removedArticle = bands
+      .map( (element, index) => {
+      let firstWord = element.split(" ")[0];
+          if(articles.includes(firstWord)) {
+            return element.substring( firstWord.length + 1, element.length) + ", " + firstWord;
+          }
+          else return element
+      })
+      .sort()
+
+
+const bandsList = document.querySelectorAll("#bands")
+
+
+bandsList[0].innerHTML = removedArticle.map(element => `<li>${element}</li>`).join(' ')
+
+
+console.log(removedArticle);
+
+
+//WES Way
+
+function strip(str){
+  return  str.replace((/^(a |an |the )/i) , "")
+}
+
+
+
+
+
+
 </script>
 
 </body>

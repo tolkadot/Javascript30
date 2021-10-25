@@ -177,11 +177,32 @@
     <li data-time="1:56">
       Video 57
     </li>
-    <li data-time="4:04">
+    <li data-time="1:14:04">
       Video 58
     </li>
   </ul>
 <script>
+
+const items = [...document.querySelectorAll('li')]
+let times = []
+let timeArr
+items.forEach(e => { 
+  timeArr = e.dataset.time.split(':')
+  if(timeArr.length < 3) {
+    times.push(timeArr.reduce((prev, curr) =>  parseInt(prev*60) + parseInt(curr)))
+    } 
+  }
+)
+
+console.log(times);
+
+const TotalTime = times.reduce((prev, curr) =>  prev + curr)
+
+const Hours = Math.floor((TotalTime)/3600)
+const Seconds = Math.floor((TotalTime) % 60)
+
+console.log(Hours , " Hours", Minutes, " Minutes")
+
 </script>
 </body>
 </html>
