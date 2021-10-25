@@ -27,7 +27,42 @@
 
   <script>
     // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+
+    const triggers = document.querySelectorAll('a');
+
+
+    let span = document.createElement('span')
+    document.body.append(span);
+    span.classList.add("highlight")
+
+    console.log(span)
+
+    function addHighlight() {
+      let coords = this.getBoundingClientRect();
+        console.log(coords.height)
+        span.style.height = coords.height + "px"
+        span.style.backgroundColor = "red"
+        span.style.width = coords.width + "px";
+        span.style.left = coords.left + "px"
+        span.style.top = coords.top + "px"
+    }
+
+    triggers.forEach(a => a.addEventListener('mouseenter' , addHighlight))
+
+
   </script>
+
+  <style>
+  html {
+      position: relative;
+    }
+    .highlight  {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+  </style>
 </body>
 </html>
 
