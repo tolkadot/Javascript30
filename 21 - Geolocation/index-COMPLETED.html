@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <meta name="viewport" content="width=device-width">
+</head>
+<body>
+  <div class="grid__wrapper">
+    <div class="grid__inner">
+  
+    <div class="error"></div>
+  
+  <div class="card">
+    
+    <h1> Compass</h1>
+    <div class="compass"><span>N</span> <span>E</span> <span>S</span> <span>W</span> <div class="needle"></div><div class="needle"></div></div>
+     <h2> Odometer</h2>
+      <div class="speed">
+        <span class="speed-value">0</span>
+        <span class="units">KM/H</span>
+      </div>
+    
+    
+  </span>
+    </div>
+    </div>
+  <style>
+   html {
+  font-size: 16px;
+  color: #364652;
+}
+
+body {
+  margin: 2rem 0;
+  font-family: sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.grid__wrapper {
+  display: grid;
+  grid-template-columns: 1rem 1fr 1rem;
+}
+.grid__wrapper > .grid__inner {
+  grid-column: 2/-2;
+}
+
+.card {
+  background-color: #deebee;
+  padding: 2rem;
+  min-height: 50vh;
+  border-radius: 3px;
+}
+.card span {
+  color: #364652;
+}
+
+.compass {
+  height: 200px;
+  width: 200px;
+  border: 15px solid white;
+  border-radius: 50%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  position: relative;
+}
+.compass span {
+  display: grid;
+  place-content: center;
+}
+.compass span:first-child {
+  grid-column: 2/2;
+  grid-row: 1;
+}
+.compass span:nth-child(2) {
+  grid-column: 3/-1;
+  grid-row: 2;
+}
+.compass span:nth-child(3) {
+  grid-column: 2/2;
+  grid-row: 3;
+}
+.compass span:nth-child(4) {
+  grid-column: 1/1;
+  grid-row: 2;
+}
+.compass .needle {
+  --height: 80px;
+  --width: 2px;
+  position: absolute;
+  height: var(--height);
+  width: var(--width);
+  left: calc(50% - (var(--width) / 2));
+  top: calc(50% - (var(--height) / 2));
+  background-color: pink;
+}
+.compass .needle:last-child {
+  width: var(--height);
+  height: var(--width);
+  left: calc(50% - (var(--height) / 2));
+  top: calc(50% - (var(--width) / 2));
+}
+
+h1, h2 {
+  color: #364652;
+  font-weight: 100;
+  font-size: clamp(3rem, 5vw + 1rem , 5rem);
+  text-align: center;
+  margin-bottom: 0.7ch;
+}
+
+.speed {
+  font-size: 3rem;
+  text-align: center;
+}
+
+.units {
+  font-size: 1rem;
+}
+
+.error {
+  margin-bottom: 0.65ch;
+  text-transform: uppercase;
+  font-size: 1.33rem;
+  text-align: center;
+}
+  </style>
+  <script>
+console.log(navigator)
+    const compass = document.querySelector(".compass");
+    const speed = document.querySelector(".speed-value")
+    const error = document.querySelector(".error")
+    navigator.geolocation.watchPosition(data => {
+      console.log(data.coords)
+      speed.textContent= data.coords.speed
+      compass.style.transform = `rotate(${data.coords.heading}deg)`
+
+    }, (err) => {
+      console.log(err);
+      error.textContent= "Please enable location services"
+    })
+  </script>
+</body>
+</html>
